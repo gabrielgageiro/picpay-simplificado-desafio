@@ -14,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "transactions")
 public class Transaction {
 
@@ -21,11 +22,11 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "payer")
-    private String payer;
+    @Column(name = "payer_id")
+    private UUID payerId;
 
-    @Column(name = "payee")
-    private String payee;
+    @Column(name = "payee_id")
+    private UUID payeeId;
 
     private BigDecimal value;
 

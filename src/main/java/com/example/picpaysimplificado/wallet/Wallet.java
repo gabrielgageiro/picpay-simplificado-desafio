@@ -37,4 +37,8 @@ public class Wallet {
     @Column(name = "balance")
     private BigDecimal balance;
 
+    public void debit(BigDecimal value){
+        this.balance = balance.subtract(value);
+    }
+
 }
