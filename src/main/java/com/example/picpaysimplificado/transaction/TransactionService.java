@@ -6,8 +6,8 @@ import com.example.picpaysimplificado.notification.NotificationService;
 import com.example.picpaysimplificado.wallet.Wallet;
 import com.example.picpaysimplificado.wallet.WalletRepository;
 import com.example.picpaysimplificado.wallet.WalletType;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
