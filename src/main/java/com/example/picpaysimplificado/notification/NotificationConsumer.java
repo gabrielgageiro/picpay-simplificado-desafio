@@ -13,7 +13,7 @@ public class NotificationConsumer {
 
     public NotificationConsumer(RestClient.Builder builder) {
         this.restClient = builder
-                .baseUrl("https://crudcrud.com/api/f97c96219f1f488b8eb3b79a53103b4c")
+                .baseUrl(" https://util.devi.tools/api/v1/notify") //servico para simular disponibilizado no github do desafio
                 .build();
     }
 
@@ -23,7 +23,8 @@ public class NotificationConsumer {
                 .retrieve()
                 .toEntity(Notification.class);
 
-        if (response.getStatusCode().isError() || !response.getBody().message()) {
+        if (response.getStatusCode().isError()) {
+            System.out.println(response.getBody().message());
             throw new NotificationException("Transacao nao autorizada");
         }
     }

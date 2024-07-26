@@ -33,9 +33,10 @@ public class TransactionService {
         transactionValidation(transaction);
         Transaction newTransaction = transactionRepository.save(transaction);
 
-        Wallet wallet = walletRepository.findById(transaction.getPayerId()).get();
-        wallet.debit(transaction.getValue());
-        walletRepository.save(wallet);
+        Wallet walletPayer = walletRepository.findById(transaction.payer()).get();
+        Wallet walletPayee = walletRepository.findById(transaction.payee()).get();
+        walletRepository.save(walletPayer.debit(transaction.value()));
+        walletRepository.save(walletPayee.credit(transaction.value()));
 
         authorizationService.authorize(newTransaction);
 
@@ -45,18 +46,17 @@ public class TransactionService {
     }
 
     private void transactionValidation(Transaction transaction) {
-        walletRepository.findById(transaction.getPayeeId())
-                .map(payeeId -> walletRepository.findById(transaction.getPayerId())
+        walletRepository.findById(transaction.payee())
+                .map(payeeId -> walletRepository.findById(transaction.payer())
                         .map(payer -> isTransactionValid(transaction, payer) ? transaction : null)
                         .orElseThrow(() -> new InvalidTransactionException("Error transaction - %s".formatted(transaction))))
                 .orElseThrow(() -> new InvalidTransactionException("Error transaction - %s".formatted(transaction)));
-
     }
 
     private static boolean isTransactionValid(Transaction transaction, Wallet payer) {
-        return payer.getType() == WalletType.COMUM &&
-                payer.getBalance().compareTo(transaction.getValue()) > -1 &&
-                !payer.getId().equals(transaction.getPayeeId());
+        return payer.type() == WalletType.COMUM &&
+                payer.balance().compareTo(transaction.value()) > -1 &&
+                !payer.id().equals(transaction.id());
     }
 
     public List<Transaction> list() {

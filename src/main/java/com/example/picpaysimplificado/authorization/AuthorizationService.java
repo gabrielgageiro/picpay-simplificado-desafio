@@ -12,7 +12,7 @@ public class AuthorizationService {
 
     public AuthorizationService(RestClient.Builder builder) {
         this.restClient = builder
-                .baseUrl("https://crudcrud.com/api/f97c96219f1f488b8eb3b79a53103b4c/notify") //mockyio sugerido estava off
+                .baseUrl("https://util.devi.tools/api/v2/authorize") //endereco disponibilizado no github do desafio
                 .build();
     }
 

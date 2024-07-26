@@ -1,37 +1,30 @@
 package com.example.picpaysimplificado.wallet;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-
 import java.math.BigDecimal;
-import java.util.UUID;
 
-@AllArgsConstructor
-@Getter
-@Setter
+
 @Table(name = "WALLETS")
-public class Wallet {
-
+public record Wallet (
     @Id
-    private UUID id;
+    Long id,
+    String fullName,
+    Long cpf,
+    Long email,
+    Long password,
+    @Enumerated(EnumType.STRING)
+    WalletType type,
+    BigDecimal balance){
 
-    private String name;
-
-    private String cpf;
-
-    private String email;
-
-    private String password;
-
-    private WalletType type;
-
-    private BigDecimal balance;
-
-    public void debit(BigDecimal value){
-        this.balance = balance.subtract(value);
+    public Wallet debit(BigDecimal value) {
+        return new Wallet(id, fullName, cpf, email, password, type, balance.subtract(value));
     }
 
+    public Wallet credit(BigDecimal value) {
+        return new Wallet(id, fullName, cpf, email, password, type, balance.add(value));
+    }
 }

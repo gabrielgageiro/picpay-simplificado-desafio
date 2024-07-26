@@ -1,34 +1,24 @@
 package com.example.picpaysimplificado.transaction;
 
-import jakarta.annotation.Generated;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@AllArgsConstructor
-@Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "TRANSACTIONS")
-public class Transaction {
+public record Transaction (
 
     @Id
-    private UUID id;
-
-    private UUID payerId;
-
-    private UUID payeeId;
-
-    private BigDecimal value;
-
+    Long id,
+    Long payer,
+    Long payee,
+    BigDecimal value,
     @CreatedDate
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt){
+
+    public Transaction{
+        value = value.setScale(2, RoundingMode.HALF_DOWN);
+    }
 }

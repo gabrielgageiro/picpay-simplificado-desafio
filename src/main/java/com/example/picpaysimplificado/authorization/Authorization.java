@@ -2,10 +2,10 @@ package com.example.picpaysimplificado.authorization;
 
 public record Authorization(
 
-        String _id, //somente pq o crudcrud retonrna o id junto
-        String message
+        String status,
+        boolean authorization
 ) {
     public boolean isAuthorized(){
-        return message.equals("autorizado");
+        return authorization;
     }
 }
