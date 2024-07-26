@@ -13,9 +13,9 @@ public record Wallet (
     @Id
     Long id,
     String fullName,
-    Long cpf,
-    Long email,
-    Long password,
+    String cpf,
+    String email,
+    String password,
     @Enumerated(EnumType.STRING)
     WalletType type,
     BigDecimal balance){
