@@ -56,7 +56,7 @@ public class TransactionService {
     private static boolean isTransactionValid(Transaction transaction, Wallet payer) {
         return payer.type() == WalletType.COMUM &&
                 payer.balance().compareTo(transaction.value()) > -1 &&
-                !payer.id().equals(transaction.id());
+                !payer.id().equals(transaction.payee());
     }
 
     public List<Transaction> list() {
