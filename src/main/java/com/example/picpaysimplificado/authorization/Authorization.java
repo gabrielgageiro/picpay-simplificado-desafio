@@ -3,9 +3,9 @@ package com.example.picpaysimplificado.authorization;
 public record Authorization(
 
         String status,
-        boolean authorization
+        AuthorizationData data //the API provided for the test returns a body
 ) {
     public boolean isAuthorized(){
-        return authorization;
+        return data.authorization();
     }
 }
